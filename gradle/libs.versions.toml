@@ -2,7 +2,7 @@
 # Versions (central control)
 #############################
 [versions]
-agp = "8.11.2"                 # Android Gradle Plugin
+agp = "8.13.0"                 # Android Gradle Plugin
 kotlin = "2.2.20"              # Kotlin compiler + stdlib
 coreKtx = "1.17.0"             # androidx.core
 lifecycleRuntimeKtx = "2.9.4"  # Lifecycle runtime (coroutines)
