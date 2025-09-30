@@ -7,9 +7,13 @@ kotlin = "2.2.20"              # Kotlin compiler + stdlib
 coreKtx = "1.17.0"             # androidx.core
 lifecycleRuntimeKtx = "2.9.4"  # Lifecycle runtime (coroutines)
 activityCompose = "1.11.0"     # Activity integration for Compose
-composeBom = "2025.09.01"      # Compose BOM (pins all compose artifacts)
 navigation = "2.9.5"           # Navigation-Compose
 window = "1.5.0"               # Jetpack WindowManager (foldables/metrics)
+
+# BOM versions
+composeBom = "2025.09.01" # Compose BOM (pins all compose artifacts)
+okhttp-bom = "5.1.0"
+retrofit-bom = "3.0.0"
 
 # Test libs
 junit = "4.13.2"
@@ -33,6 +37,18 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 # ---- Material 3 + adaptive size classes (from BOM) ----
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }      # Material 3 components
 androidx-material3-window-size = { group = "androidx.compose.material3", name = "material3-window-size-class" } # WindowSizeClass APIs
+
+# OkHttp BOM
+okhttp-bom = { module = "com.squareup.okhttp3:okhttp-bom", version.ref = "okhttp-bom" }
+okHttp3 = { module = "com.squareup.okhttp3:okhttp" }
+logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor" }
+
+# Retrofit BOM
+retrofit-bom = { module = "com.squareup.retrofit2:retrofit-bom", version.ref = "retrofit-bom" }
+retrofit-retrofit = { module = "com.squareup.retrofit2:retrofit" }
+retrofit-gson = { module = "com.squareup.retrofit2:converter-gson" }
+retrofit-converter-scalars = { module = "com.squareup.retrofit2:converter-scalars" }
+
 
 # ---- Navigation / Windowing ----
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" } # Compose Nav

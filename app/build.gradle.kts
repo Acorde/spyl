@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -10,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "com.moe.spyl"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -28,11 +30,28 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "11"
+
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(17)) // JDK used by Java tasks
+        }
+    }
+    kotlin {
+        // Ensures Gradle uses JDK 17 to compile Kotlin
+        jvmToolchain(17)
+
+        compilerOptions {
+            // ⬅️ replaces kotlinOptions { jvmTarget = "11" }
+            jvmTarget.set(JvmTarget.JVM_17)
+
+            // (optional) keep your other flags here:
+            // languageVersion.set(KotlinVersion.KOTLIN_2_0) // or 2_1, 2_2 as you need
+            // apiVersion.set(KotlinVersion.KOTLIN_2_0)
+            // freeCompilerArgs.addAll("-Xjvm-default=all", "-opt-in=kotlin.RequiresOptIn")
+        }
     }
     buildFeatures {
         compose = true
@@ -70,4 +89,15 @@ dependencies {
     // --- Debug-only tooling (exclude from release) ---
     debugImplementation(libs.androidx.ui.tooling)          // Live previews/inspector
     debugImplementation(libs.androidx.ui.test.manifest)    // Compose test manifest stub
+
+    //Retrofit
+    implementation(platform(libs.retrofit.bom))
+    implementation(libs.retrofit.retrofit)
+    implementation(libs.retrofit.gson)
+    implementation(libs.retrofit.converter.scalars)
+
+    //Okhttp
+    implementation(platform(libs.okhttp.bom))    // BOM
+    implementation(libs.okHttp3)                 // artifacts
+    implementation(libs.logging.interceptor)
 }
