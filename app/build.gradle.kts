@@ -20,17 +20,41 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        missingDimensionStrategy("environment", "dev")
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            buildConfigField("String", "BASE_URL", "\"https://\"")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
+        debug {
+            buildConfigField("String", "BASE_URL", "\"https://\"")
+            isMinifyEnabled = false
+            isDebuggable = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+
+            )
+        }
     }
+
+
+    flavorDimensions += "environment"
+    productFlavors {
+        create("dev") {
+            dimension = "environment"
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-dev"
+        }
+    }
+
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -56,13 +80,18 @@ android {
         }
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 }
 
 dependencies {
 
+    constraints {
+        implementation(libs.javapoet)   // influences resolution
+        add("ksp", libs.javapoet)    // if using KSP
 
+    }
     // --- AndroidX core/runtime ---
     implementation(libs.androidx.core.ktx)                 // Kotlin extensions for core Android APIs
     implementation(libs.androidx.lifecycle.runtime.ktx)    // Lifecycle + coroutines

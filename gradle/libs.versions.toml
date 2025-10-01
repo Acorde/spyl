@@ -12,6 +12,7 @@ window = "1.5.0"               # Jetpack WindowManager (foldables/metrics)
 hilt = "2.57.2"                # Dagger Hilt
 hilt-nav-compose = "1.2.0"
 ksp = "2.2.20-2.0.3"
+javapoet = "1.13.0"
 
 # BOM versions
 composeBom = "2025.09.01" # Compose BOM (pins all compose artifacts)
@@ -26,6 +27,7 @@ espressoCore = "3.7.0"
 uiGraphics = "1.9.2"
 foundationLayout = "1.9.2"
 
+
 #############################
 # Libraries
 #############################
@@ -33,6 +35,8 @@ foundationLayout = "1.9.2"
 
 # ---- Compose platform/BOM ----
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" } # import with platform()
+
+javapoet = { module = "com.squareup:javapoet", version.ref = "javapoet" }
 
 # ---- Compose UI/Core (version comes from BOM) ----
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }                           # Core runtime for Compose UI
@@ -88,6 +92,7 @@ androidx-compose-foundation-layout = { group = "androidx.compose.foundation", na
 android-application = { id = "com.android.application", version.ref = "agp" }  # Android app plugin
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" } # Kotlin Android plugin
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" } # Compose compiler plugin
+
 
 # Hilt Gradle plugin
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
