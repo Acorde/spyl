@@ -9,11 +9,15 @@ lifecycleRuntimeKtx = "2.9.4"  # Lifecycle runtime (coroutines)
 activityCompose = "1.11.0"     # Activity integration for Compose
 navigation = "2.9.5"           # Navigation-Compose
 window = "1.5.0"               # Jetpack WindowManager (foldables/metrics)
+hilt = "2.57.2"                # Dagger Hilt
+hilt-nav-compose = "1.2.0"
+ksp = "2.2.20-2.0.3"
 
 # BOM versions
 composeBom = "2025.09.01" # Compose BOM (pins all compose artifacts)
 okhttp-bom = "5.1.0"
 retrofit-bom = "3.0.0"
+
 
 # Test libs
 junit = "4.13.2"
@@ -53,6 +57,11 @@ retrofit-retrofit = { module = "com.squareup.retrofit2:retrofit" }
 retrofit-gson = { module = "com.squareup.retrofit2:converter-gson" }
 retrofit-converter-scalars = { module = "com.squareup.retrofit2:converter-scalars" }
 
+# Hilt core
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
+androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-nav-compose" }
+
 
 # ---- Navigation / Windowing ----
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" } # Compose Nav
@@ -79,3 +88,7 @@ androidx-compose-foundation-layout = { group = "androidx.compose.foundation", na
 android-application = { id = "com.android.application", version.ref = "agp" }  # Android app plugin
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" } # Kotlin Android plugin
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" } # Compose compiler plugin
+
+# Hilt Gradle plugin
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
