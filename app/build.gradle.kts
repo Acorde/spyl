@@ -74,6 +74,9 @@ dependencies {
     implementation(libs.androidx.ui.graphics)              // Graphics utilities
     implementation(libs.androidx.material3)                // Material 3 components
     implementation(libs.androidx.material3.window.size)    // WindowSizeClass (adaptive layouts)
+    implementation(libs.androidx.compose.material.icons.core)
+    implementation(libs.androidx.compose.material.icons.extended)
+    implementation(libs.androidx.ui.tooling.preview)       // @Preview runtime deps
 
     // --- Navigation / Windowing (for tablets, foldables, desktops) ---
     implementation(libs.androidx.navigation.compose)       // Navigation in Compose
