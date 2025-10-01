@@ -80,7 +80,9 @@ dependencies {
 
     // --- Navigation / Windowing (for tablets, foldables, desktops) ---
     implementation(libs.androidx.navigation.compose)       // Navigation in Compose
-    implementation(libs.androidx.window)                   // Jetpack WindowManager (folds/metrics)
+    implementation(libs.androidx.window)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.foundation.layout)                   // Jetpack WindowManager (folds/metrics)
 
     // --- Unit & Instrumented tests ---
     testImplementation(libs.junit)                         // JVM unit tests

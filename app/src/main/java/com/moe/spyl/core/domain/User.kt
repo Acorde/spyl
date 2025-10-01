@@ -1,5 +1,7 @@
 package com.moe.spyl.core.domain
 
+import com.moe.spyl.core.presentation.models.NavItemType
+
 data class User(
     val firstName: String? = null,
     val lastName: String? = null,
@@ -10,5 +12,6 @@ data class User(
     val department: String? = null,
     val icon: String? = null,
     val userType: UserType? = null,
-    val userRole: UserRole? = null
+    val userRole: UserRole? = null,
+    val navItemType: List<NavItemType>? = null
 )

@@ -8,20 +8,25 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.moe.spyl.ui.theme.SpylTheme
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val windowSizeClass = calculateWindowSizeClass(this)
             SpylTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    AppRoot(
+                        widthClass = windowSizeClass.widthSizeClass,
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -31,17 +36,17 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+fun AppRoot(widthClass: WindowWidthSizeClass, modifier: Modifier = Modifier) {
+    // use widthClass to adapt UI (rail vs labels, columns, etc.)
+    
 }
+
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun AppRootPreview() {
     SpylTheme {
-        Greeting("Android")
+        AppRoot(widthClass = WindowWidthSizeClass.Compact)
+
     }
 }

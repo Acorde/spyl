@@ -19,6 +19,8 @@ retrofit-bom = "3.0.0"
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
+uiGraphics = "1.9.2"
+foundationLayout = "1.9.2"
 
 #############################
 # Libraries
@@ -66,7 +68,9 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }              
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }              # AndroidX JUnit runner
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" } # UI tests
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }                        # Compose testing (from BOM)
-androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }                    # Debug-only manifest for Compose tests
+androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics", version.ref = "uiGraphics" }
+androidx-compose-foundation-layout = { group = "androidx.compose.foundation", name = "foundation-layout", version.ref = "foundationLayout" }                    # Debug-only manifest for Compose tests
 
 #############################
 # Plugins
