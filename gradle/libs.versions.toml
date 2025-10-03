@@ -38,6 +38,9 @@ androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", versi
 
 javapoet = { module = "com.squareup:javapoet", version.ref = "javapoet" }
 
+# ----- Kotlin -------#
+kotlin-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.9.0" }
+
 # ---- Compose UI/Core (version comes from BOM) ----
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }                           # Core runtime for Compose UI
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }         # Graphics APIs (Brush, ImageBitmap, etc.)
@@ -92,7 +95,7 @@ androidx-compose-foundation-layout = { group = "androidx.compose.foundation", na
 android-application = { id = "com.android.application", version.ref = "agp" }  # Android app plugin
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" } # Kotlin Android plugin
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" } # Compose compiler plugin
-
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 # Hilt Gradle plugin
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }

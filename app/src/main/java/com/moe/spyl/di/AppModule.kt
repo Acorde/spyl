@@ -9,5 +9,5 @@ import dagger.hilt.components.SingletonComponent
 object AppModule {
 //    @Provides
 //    @Singleton
-//    fun provideApi(okHttp: OkHttpClient): RestApi = retrofitBuilder(okHttp).create(MyApi::class.java)
+//    fun provideApi(okHttp: OkHttpClient): RestApi = Retrofit.Builder(okHttp).create(MyApi::class.java)
 }

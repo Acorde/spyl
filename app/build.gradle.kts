@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -96,6 +97,10 @@ dependencies {
     implementation(libs.androidx.core.ktx)                 // Kotlin extensions for core Android APIs
     implementation(libs.androidx.lifecycle.runtime.ktx)    // Lifecycle + coroutines
     implementation(libs.androidx.activity.compose)         // setContent(), back handling, etc.
+
+    //----- Kotlin Serialization ---
+    implementation(libs.kotlin.serialization.json)
+
 
     // --- Compose platform (BOM pins all compose artifacts) ---
     implementation(platform(libs.androidx.compose.bom))
