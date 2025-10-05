@@ -13,6 +13,9 @@ hilt = "2.57.2"                # Dagger Hilt
 hilt-nav-compose = "1.2.0"
 ksp = "2.2.20-2.0.3"
 javapoet = "1.13.0"
+camera-x = "1.5.0"
+z-xing = "3.5.2"
+
 
 # BOM versions
 composeBom = "2025.09.01" # Compose BOM (pins all compose artifacts)
@@ -68,6 +71,16 @@ retrofit-converter-scalars = { module = "com.squareup.retrofit2:converter-scalar
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-nav-compose" }
+
+#CameraX
+androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "camera-x" }
+androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "camera-x" }
+androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "camera-x" }
+#androidx.camera-extensions = { module = "androidx.camera:camera-extensions", version.ref = "camera-x" }
+
+# ZXing for QR code scanning
+zxing-core = { module = "com.google.zxing:core", version.ref = "z-xing" }
+#zxing-android-embedded = { module = "com.journeyapps:zxing-android-embedded", version.ref = "z-xing" }
 
 
 # ---- Navigation / Windowing ----
