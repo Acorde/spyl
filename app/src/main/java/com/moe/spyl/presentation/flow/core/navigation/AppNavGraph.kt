@@ -1,6 +1,7 @@
 package com.moe.spyl.presentation.flow.core.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -12,6 +13,8 @@ import com.moe.spyl.presentation.flow.core.utils.rememberBaseNavController
 import com.moe.spyl.presentation.flow.login.LoginScreen
 import com.moe.spyl.presentation.flow.login.LoginViewModel
 import com.moe.spyl.presentation.flow.qr_code.QrCodeView
+import com.moe.spyl.presentation.flow.qr_code.QrCodeViewModel
+import com.moe.spyl.presentation.ui.ext.navigateClearStack
 
 @Composable
 fun AppNavGraph(
@@ -39,7 +42,19 @@ fun AppNavGraph(
 
         composable<MainNavigationRoutes.QRScanner> {
 
-            QrCodeView()
+            val viewModel = hiltViewModel<QrCodeViewModel>()
+            val state = viewModel.state.collectAsStateWithLifecycle()
+
+            LaunchedEffect(state.value.navigationRoute) {
+                state.value.navigationRoute?.let { route ->
+                    navController.navigateClearStack(route = route)
+                }
+            }
+
+            QrCodeView(
+                state = state.value,
+                onEvent = viewModel::onEvent
+            )
         }
     }
 }

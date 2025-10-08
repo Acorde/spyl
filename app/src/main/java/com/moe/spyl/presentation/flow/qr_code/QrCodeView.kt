@@ -27,13 +27,17 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import com.moe.spyl.presentation.flow.login.QrCodeEvent
+import com.moe.spyl.presentation.flow.qr_code.models.QrCodeState
 import com.moe.spyl.presentation.flow.qr_code.utils.QrCodeAnalyzer
 import com.moe.spyl.ui.theme.SpylTheme
 
 @Composable
-fun QrCodeView() {
+fun QrCodeView(
+    state: QrCodeState = QrCodeState(),
+    onEvent: (QrCodeEvent) -> Unit = {}
+) {
 
-    var aCode by remember { mutableStateOf("") }
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val cameraProviderFuture = remember { ProcessCameraProvider.getInstance(context) }
@@ -77,7 +81,7 @@ fun QrCodeView() {
                     imageAnalysis.setAnalyzer(
                         ContextCompat.getMainExecutor(context),
                         QrCodeAnalyzer { result ->
-                            aCode = result
+                            onEvent(QrCodeEvent.OnQrCodeScanned(result))
                         })
 
                     try {
@@ -95,7 +99,7 @@ fun QrCodeView() {
 
             Text(
                 modifier = Modifier.padding(32.dp),
-                text = aCode,
+                text = state.qrCode,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.SemiBold
             )
