@@ -11,6 +11,7 @@ import com.moe.spyl.presentation.flow.core.components.SpylSharedViewModel
 import com.moe.spyl.presentation.flow.core.utils.rememberBaseNavController
 import com.moe.spyl.presentation.flow.login.LoginScreen
 import com.moe.spyl.presentation.flow.login.LoginViewModel
+import com.moe.spyl.presentation.flow.qr_code.QrCodeView
 
 @Composable
 fun AppNavGraph(
@@ -27,13 +28,18 @@ fun AppNavGraph(
         startDestination = sharedState.value.initialRoute,
     ) {
         composable<MainNavigationRoutes.Login> {
-                val viewModel = hiltViewModel<LoginViewModel>()
-                val state = viewModel.state.collectAsStateWithLifecycle()
+            val viewModel = hiltViewModel<LoginViewModel>()
+            val state = viewModel.state.collectAsStateWithLifecycle()
 
             LoginScreen(
                 state = state.value,
                 onEvent = viewModel::onEvent
             )
+        }
+
+        composable<MainNavigationRoutes.QRScanner> {
+
+            QrCodeView()
         }
     }
 }

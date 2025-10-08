@@ -25,6 +25,7 @@ class QrCodeAnalyzer(
         if (image.format in supportedImageFormats) {
             val bytes = image.planes.first().buffer.toByteArray()
 
+
             val sorse = PlanarYUVLuminanceSource(
                 /* yuvData = */ bytes,
                 /* dataWidth = */ image.width,
