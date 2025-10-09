@@ -5,5 +5,5 @@ import com.moe.spyl.presentation.flow.core.navigation.NavigationRoutes
 
 data class SharedViewmodelState(
     val test : String = "",
-    val initialRoute : NavigationRoutes = MainNavigationRoutes.Chat
+    val initialRoute : NavigationRoutes = MainNavigationRoutes.Login
 )

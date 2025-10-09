@@ -3,6 +3,7 @@ package com.moe.spyl.presentation.flow.login.components
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -33,6 +34,7 @@ import com.moe.spyl.ui.theme.SpylTheme
 
 @Composable
 fun LoginPasswordView(
+    modifier: Modifier = Modifier,
     password: String,
     isCanContinue: Boolean = false,
     onValueChange: (String) -> Unit = {},
@@ -40,7 +42,7 @@ fun LoginPasswordView(
 ) {
     var showPassword by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
-    Column {
+    Column(modifier = modifier.imePadding()) {
 
 
         Text(

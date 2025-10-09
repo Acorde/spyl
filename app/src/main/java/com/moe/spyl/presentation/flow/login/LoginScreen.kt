@@ -22,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -31,15 +32,17 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.moe.spyl.presentation.flow.login.models.LoginState
-import com.moe.spyl.presentation.flow.login.components.LoginCompanyCode
+import com.moe.spyl.presentation.flow.login.components.LoginOtpScreenView
 import com.moe.spyl.presentation.flow.login.components.LoginPasswordView
 import com.moe.spyl.presentation.flow.login.models.LoginEvent
+import com.moe.spyl.presentation.flow.login.models.LoginPasswordEvent
 import com.moe.spyl.presentation.flow.login.preview.LoginStatePreviewParameterProvider
 import com.moe.spyl.ui.theme.SpylTheme
 
 @Composable
 fun LoginScreen(
     state: LoginState,
+    focusRequesters: List<FocusRequester> = emptyList(),
     onEvent: (LoginEvent) -> Unit = {}
 ) {
     Box(
@@ -70,9 +73,19 @@ fun LoginScreen(
 
                 Spacer(Modifier.height(20.dp))
 
-                LoginCompanyCode(code = state.companyCode, onEvent = onEvent)
+                LoginOtpScreenView(
+                    focusRequesters = focusRequesters,
+                    state = state,
+                    onEvent = onEvent
+                )
 
-                LoginPasswordView(password = state.password)
+                Spacer(Modifier.height(20.dp))
+                LoginPasswordView(
+                    password = state.password,
+                    onValueChange = {
+                        onEvent(LoginPasswordEvent.OnPasswordChanged(it))
+                    }
+                )
 
                 Spacer(Modifier.height(16.dp))
 
@@ -102,6 +115,10 @@ private fun CoinListScreenPreview(
 ) {
     SpylTheme {
         var code by remember { mutableStateOf(CharArray(4) { ' ' }) }
-        LoginScreen(state = state)
+        val focusRequesters = remember { (1..4).map { FocusRequester() } }
+        LoginScreen(
+            state = state,
+            focusRequesters = focusRequesters,
+        )
     }
 }

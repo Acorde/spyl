@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -63,7 +64,7 @@ class MainActivity : ComponentActivity() {
                     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                         AppRoot(
                             widthClass = windowSizeClass.widthSizeClass,
-                            modifier = Modifier.padding(innerPadding),
+                            modifier = Modifier.padding(innerPadding).consumeWindowInsets(innerPadding),
                             sharedViewModel = sharedViewModel
                         )
                     }

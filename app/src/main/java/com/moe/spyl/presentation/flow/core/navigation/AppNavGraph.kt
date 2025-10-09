@@ -2,7 +2,11 @@ package com.moe.spyl.presentation.flow.core.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
@@ -14,6 +18,7 @@ import com.moe.spyl.presentation.flow.core.components.SpylSharedViewModel
 import com.moe.spyl.presentation.flow.core.utils.rememberBaseNavController
 import com.moe.spyl.presentation.flow.login.LoginScreen
 import com.moe.spyl.presentation.flow.login.LoginViewModel
+import com.moe.spyl.presentation.flow.login.models.LoginCompanyCodeEvent
 import com.moe.spyl.presentation.flow.qr_code.QrCodeView
 import com.moe.spyl.presentation.flow.qr_code.QrCodeViewModel
 import com.moe.spyl.presentation.ui.ext.navigateClearStack
@@ -35,11 +40,46 @@ fun AppNavGraph(
         composable<MainNavigationRoutes.Login> {
             val viewModel = hiltViewModel<LoginViewModel>()
             val state = viewModel.state.collectAsStateWithLifecycle()
+            val focusRequesters = remember { (1..4).map { FocusRequester() } }
+
+            val focusManager = LocalFocusManager.current
+            val keyboardManager = LocalSoftwareKeyboardController.current
+
+
+            LaunchedEffect(key1 = state.value.focusIndex) {
+                state.value.focusIndex?.let { focusIndex ->
+                    focusRequesters.getOrNull(focusIndex)?.requestFocus()
+                }
+
+            }
+
+            LaunchedEffect(key1 = state.value.code, key2 = keyboardManager) {
+                val allNumbersEntered = state.value.code.none { it == null }
+                if (allNumbersEntered) {
+                    focusRequesters.forEach {
+                        it.freeFocus()
+                    }
+
+                    focusManager.clearFocus()
+                    keyboardManager?.hide()
+                }
+            }
 
             LoginScreen(
-                state = state.value,
-                onEvent = viewModel::onEvent
-            )
+                focusRequesters = focusRequesters,
+                state = state.value, onEvent = { event ->
+                    when (event) {
+                        is LoginCompanyCodeEvent.OnEnterNumber -> {
+                            if (event.number != null) {
+                                focusRequesters[event.index].freeFocus()
+                            }
+                        }
+
+                        else -> Unit
+                    }
+
+                    viewModel.onEvent(event)
+                })
         }
 
         composable<MainNavigationRoutes.QRScanner> {
@@ -54,8 +94,7 @@ fun AppNavGraph(
             }
 
             QrCodeView(
-                state = state.value,
-                onEvent = viewModel::onEvent
+                state = state.value, onEvent = viewModel::onEvent
             )
         }
 
