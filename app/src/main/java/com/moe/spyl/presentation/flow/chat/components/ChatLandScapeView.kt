@@ -109,12 +109,20 @@ fun ChatLandScapeView(
                     )
                 }
             }
-
-            ChatCustomerActionButtonsView(
+            ChatPulseAnimatedButton(
                 modifier = Modifier
                     .align(alignment = Alignment.TopCenter)
-                    .padding(20.dp)
+                    .padding(20.dp),
+                size = 60.dp,
+                waves = 3,
+                waveMaxExtra = 25.dp,
+                ringStyle = false // set false for filled pulses
             )
+//            ChatCustomerActionButtonsView(
+//                modifier = Modifier
+//                    .align(alignment = Alignment.TopCenter)
+//                    .padding(20.dp)
+//            )
         }
     }
 }

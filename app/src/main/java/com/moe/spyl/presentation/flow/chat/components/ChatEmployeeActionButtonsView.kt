@@ -13,6 +13,7 @@ import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Mic
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -29,17 +30,26 @@ fun ChatEmployeeActionButtonsView(
 ) {
     Row(
         modifier = modifier.wrapContentSize(),
+        verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(30.dp)
     ) {
-        Icon(
-            modifier = Modifier
-                .clip(CircleShape)
-                .background(Color.Black)
-                .padding(10.dp),
-            imageVector = Icons.Rounded.Mic,
-            contentDescription = null,
-            tint = Color.White
+
+        ChatPulseAnimatedButton(
+            modifier = Modifier,
+            size = 60.dp,
+            waves = 2,
+            waveMaxExtra = 25.dp,
+            ringStyle = false // set false for filled pulses
         )
+//        Icon(
+//            modifier = Modifier
+//                .clip(CircleShape)
+//                .background(Color.Black)
+//                .padding(10.dp),
+//            imageVector = Icons.Rounded.Mic,
+//            contentDescription = null,
+//            tint = Color.White
+//        )
 
         Icon(
             modifier = Modifier
