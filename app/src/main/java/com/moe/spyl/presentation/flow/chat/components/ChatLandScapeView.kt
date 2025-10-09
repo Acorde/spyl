@@ -1,54 +1,137 @@
 package com.moe.spyl.presentation.flow.chat.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.tooling.preview.Devices.TABLET
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.moe.spyl.presentation.flow.chat.models.ChatMessage
+import com.moe.spyl.presentation.flow.login.models.LoginState
+import com.moe.spyl.presentation.flow.login.preview.LoginStatePreviewParameterProvider
+import com.moe.spyl.ui.theme.SpylTheme
 
 @Composable
-fun ChatLandScapeView() {
-    Row(modifier = Modifier.fillMaxSize()) {
-        LazyColumn(modifier = Modifier.weight(1f)) {
-            items(50) {
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(Color.Gray)
-                        .padding(16.dp),
-                    text = "Item $it",
-                    fontSize = 25.sp,
+fun ChatLandScapeView(
+    modifier: Modifier = Modifier,
+    messagesList: List<ChatMessage>,
+    isLoading: Boolean = false,
+) {
 
+    val employeeLazyColumState = rememberLazyListState()
+    val customerLazyColumState = rememberLazyListState()
+
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFFE5E7EB))
+            .padding(horizontal = 24.dp, vertical = 16.dp),
+        horizontalArrangement = Arrangement.spacedBy(24.dp),
+
+        ) {
+        Box(
+            modifier = Modifier
+                .fillMaxHeight()
+                .weight(1f)
+                .clip(RoundedCornerShape(24.dp))
+                .background(Color.White)
+        ) {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .padding(horizontal = 12.dp, vertical = 5.dp),
+                state = employeeLazyColumState,
+
+                ) {
+                itemsIndexed(
+                    items = messagesList,
+                    key = { index, item -> item.id }
+                ) { index, message ->
+                    ChatMessagesWrapperView(
+                        message = message,
+                        isLastIndex = index == messagesList.lastIndex
                     )
+                }
             }
+
+            ChatEmployeeActionButtonsView(
+                modifier = Modifier
+                    .align(alignment = Alignment.BottomCenter)
+                    .padding(20.dp)
+            )
         }
 
         // Opposite side — flip the entire column
-        LazyColumn(
+        Box(
             modifier = Modifier
+                .fillMaxHeight()
                 .weight(1f)
-                .graphicsLayer { rotationZ = 180f } // flip list for the opposite viewer
+                .clip(RoundedCornerShape(24.dp))
+                .background(Color.White)
         ) {
-            items(50) { i ->
-                // Do NOT rotate the item back; it’s supposed to be upright for them,
-                // which will look upside-down to you (that’s correct).
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(Color.Green)
-                        .padding(16.dp),
-                    text = "Item $i",
-                    fontSize = 25.sp
-                )
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .padding(horizontal = 12.dp, vertical = 5.dp)
+                    .graphicsLayer { rotationZ = 180f },  // flip list for the opposite viewer
+                state = customerLazyColumState,
+            ) {
+                itemsIndexed(
+                    items = messagesList,
+                    key = { index, item -> item.id }
+                ) { index, message ->
+                    ChatMessagesWrapperView(
+                        message = message,
+                        isLastIndex = index == messagesList.lastIndex
+                    )
+                }
             }
+
+            ChatCustomerActionButtonsView(
+                modifier = Modifier
+                    .align(alignment = Alignment.TopCenter)
+                    .padding(20.dp)
+            )
         }
+    }
+}
+
+@Preview(name = "Tablet - Landscape", device = TABLET, showSystemUi = true)
+@Composable
+private fun ChatLandScapeViewPreview(
+    @PreviewParameter(LoginStatePreviewParameterProvider::class) state: LoginState
+) {
+    SpylTheme {
+        var code by remember { mutableStateOf(CharArray(4) { ' ' }) }
+        val focusRequesters = remember { (1..4).map { FocusRequester() } }
+        ChatLandScapeView(
+            messagesList = listOf(
+                ChatMessage.EmployeeMessage(text = "Hi, Welcome to 4 Season Hotel"),
+                ChatMessage.CustomerMessage(text = "הי אני רוצה"),
+            )
+        )
     }
 }

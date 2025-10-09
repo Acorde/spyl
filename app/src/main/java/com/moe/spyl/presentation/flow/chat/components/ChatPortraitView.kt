@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -13,9 +14,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.moe.spyl.presentation.flow.chat.models.ChatMessage
 
 @Composable
-fun ChatPortraitView() {
+fun ChatPortraitView(
+    modifier: Modifier = Modifier,
+    messagesList: List<ChatMessage>,
+    isLoading: Boolean = false,
+) {
+
+    val lazyListState = rememberLazyListState()
+
     Column(modifier = Modifier.fillMaxSize()) {
         // Opposite side — flip the entire column
         LazyColumn(

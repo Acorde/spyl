@@ -8,17 +8,30 @@ import androidx.compose.ui.Modifier
 import com.moe.spyl.data.core.local.LocalAppWindowSize
 import com.moe.spyl.presentation.flow.chat.components.ChatLandScapeView
 import com.moe.spyl.presentation.flow.chat.components.ChatPortraitView
+import com.moe.spyl.presentation.flow.chat.models.ChatMessage
 
 @Composable
-fun ChatView() {
+fun ChatView(
+    modifier: Modifier = Modifier,
+    messagesList: List<ChatMessage> = emptyList(),
+    isLoading: Boolean = false,
+) {
     val appWindow = LocalAppWindowSize.current
 
 
     Box(modifier = Modifier.fillMaxSize()) {
 
         when (appWindow.width) {
-            WindowWidthSizeClass.Medium -> ChatPortraitView()
-            WindowWidthSizeClass.Expanded -> ChatLandScapeView()
+            WindowWidthSizeClass.Medium -> ChatPortraitView(
+                messagesList = messagesList,
+                isLoading = isLoading
+            )
+
+            WindowWidthSizeClass.Expanded -> ChatLandScapeView(
+                messagesList = messagesList,
+                isLoading = isLoading
+            )
+
             else -> {/* phone fallback */
             }
         }

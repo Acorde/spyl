@@ -15,6 +15,7 @@ import androidx.navigation.compose.composable
 import com.moe.spyl.presentation.flow.chat.ChatView
 import com.moe.spyl.presentation.flow.chat.ChatViewModel
 import com.moe.spyl.presentation.flow.core.components.SpylSharedViewModel
+import com.moe.spyl.presentation.flow.core.navigation.chat_navigation.chatNavGraph
 import com.moe.spyl.presentation.flow.core.utils.rememberBaseNavController
 import com.moe.spyl.presentation.flow.login.LoginScreen
 import com.moe.spyl.presentation.flow.login.LoginViewModel
@@ -97,13 +98,9 @@ fun AppNavGraph(
                 state = state.value, onEvent = viewModel::onEvent
             )
         }
+        chatNavGraph(
+            navController = navController
+        )
 
-        composable<MainNavigationRoutes.Chat> {
-            val viewModel = hiltViewModel<ChatViewModel>()
-            val state = viewModel.state.collectAsStateWithLifecycle()
-
-            ChatView()
-
-        }
     }
 }

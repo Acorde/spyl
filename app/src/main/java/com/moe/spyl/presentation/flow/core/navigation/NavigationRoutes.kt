@@ -14,9 +14,6 @@ sealed interface MainNavigationRoutes : NavigationRoutes {
     data object Login : MainNavigationRoutes
 
     @Serializable
-    data object Chat : MainNavigationRoutes
-
-    @Serializable
     data object Settings : MainNavigationRoutes
 
     @Serializable
