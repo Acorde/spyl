@@ -4,15 +4,18 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,7 +32,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.moe.spyl.data.core.domain.User
+import com.moe.spyl.data.core.domain.UserType
 import com.moe.spyl.presentation.flow.chat.models.ChatMessage
+import com.moe.spyl.presentation.flow.core.components.SideNavRail
+import com.moe.spyl.presentation.flow.core.models.NavItemType
 import com.moe.spyl.presentation.flow.login.models.LoginState
 import com.moe.spyl.presentation.flow.login.preview.LoginStatePreviewParameterProvider
 import com.moe.spyl.ui.theme.SpylTheme
@@ -135,11 +142,33 @@ private fun ChatLandScapeViewPreview(
     SpylTheme {
         var code by remember { mutableStateOf(CharArray(4) { ' ' }) }
         val focusRequesters = remember { (1..4).map { FocusRequester() } }
-        ChatLandScapeView(
-            messagesList = listOf(
-                ChatMessage.EmployeeMessage(text = "Hi, Welcome to 4 Season Hotel"),
-                ChatMessage.CustomerMessage(text = "הי אני רוצה"),
+        Row(modifier = Modifier.fillMaxSize()) {
+            val widthClass = WindowWidthSizeClass.Expanded
+            if (widthClass == WindowWidthSizeClass.Medium || widthClass == WindowWidthSizeClass.Expanded) {
+
+                SideNavRail(
+                    widthClass = widthClass,
+                    user = User(
+                        userType = UserType.RECEPTIONIST,
+                        navItemType = NavItemType.getNavItemUserType(UserType.RECEPTIONIST)
+                    ),
+                    selectedNavItem = NavItemType.CHAT,
+                    onSelect = {
+                        //TODO...
+                    }
+                )
+                    //Spacer(Modifier.width(16.dp))
+            }
+
+            ChatLandScapeView(
+                messagesList = listOf(
+                    ChatMessage.EmployeeMessage(text = "Hi, Welcome to 4 Season Hotel"),
+                    ChatMessage.CustomerMessage(text = "הי אני רוצה"),
+                    ChatMessage.EmployeeMessage(text = "May I have your id number"),
+                    ChatMessage.CustomerMessage(text = "מספר הת״ז שךי הוא 111111111"),
+
+                    )
             )
-        )
+        }
     }
 }
